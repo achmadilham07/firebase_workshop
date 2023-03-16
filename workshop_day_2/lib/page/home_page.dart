@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:provider/provider.dart';
 import 'package:workshop/page/chat_detail_page.dart';
+import 'package:workshop/provider/user_provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -18,10 +18,10 @@ class HomePage extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return  SignInScreen(
-                providers: [
-                  EmailAuthProvider(),
-                ],
+            return SignInScreen(
+              providers: [
+                EmailAuthProvider(),
+              ],
             );
           }
 
@@ -34,8 +34,9 @@ class HomePage extends StatelessWidget {
           }
 
           final user = snapshot.data;
+          context.read<UserProvider>().user = user!;
 
-          return const  ChatDetailPage();
+          return const ChatDetailPage();
         },
       ),
     );
