@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "915057572437",
+    "project_id": "my-chat-app-belajarubic",
+    "storage_bucket": "my-chat-app-belajarubic.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:915057572437:android:0a2a2b8a944a7820e3b2dc",
+        "android_client_info": {
+          "package_name": "com.belajarubic.workshop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "915057572437-pnou5hi97o5rnpjd57fevn9vbihaq6co.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCO8mLAO0IErri4SItAasIppyz6fCvoFIo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "915057572437-pnou5hi97o5rnpjd57fevn9vbihaq6co.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "915057572437-3ug51cqh87bld6rue1hssn5ld9jlq032.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.belajarubic.workshop"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
