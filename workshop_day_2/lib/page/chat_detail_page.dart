@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:workshop/model/message.dart';
 import 'package:workshop/widget/message_bubble_widget.dart';
@@ -36,23 +38,58 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
     ),
   ];
 
+  late FirebaseFirestore _firestore;
+  late FirebaseAuth _auth;
+
+  @override
+  void initState() {
+    super.initState();
+    _auth = FirebaseAuth.instance;
+    _firestore = FirebaseFirestore.instance;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("My Chat"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              _auth.signOut();
+            },
+            icon: const Icon(Icons.logout),
+          ),
+        ],
       ),
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-              itemCount: messages.length,
-              itemBuilder: (context, index) {
-                final message = messages[index];
-                final isMyMessage = message.sender == "achmadilham07@gmail.com";
-                return MessageBubbleWidget(
-                  message: message,
-                  isMyMessage: isMyMessage,
+            child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+              stream: _firestore
+                  .collection('messages')
+                  .orderBy('dateCreated', descending: true)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                return ListView.builder(
+                  reverse: true,
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    final json = snapshot.data!.docs[index];
+                    final message = Message.fromMap(json.data());
+                    final isMyMessage =
+                        message.sender == _auth.currentUser?.email.toString();
+                    return MessageBubbleWidget(
+                      message: message,
+                      isMyMessage: isMyMessage,
+                    );
+                  },
                 );
               },
             ),
@@ -86,7 +123,17 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                 Padding(
                   padding: const EdgeInsets.only(left: 8),
                   child: FloatingActionButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      final text = messageController.text;
+                      if (text.isNotEmpty) {
+                        _firestore.collection('messages').add({
+                          'text': text,
+                          'sender': _auth.currentUser?.email,
+                          'dateCreated': Timestamp.now().millisecondsSinceEpoch,
+                        });
+                        messageController.clear();
+                      }
+                    },
                     elevation: 0,
                     mini: true,
                     highlightElevation: 0,

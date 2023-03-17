@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:workshop/page/chat_detail_page.dart';
+import 'package:workshop/page/login_page.dart';
 import 'package:workshop/provider/user_provider.dart';
 
 class MyChatApp extends StatelessWidget {
@@ -20,7 +20,7 @@ class MyChatApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: const ChatDetailPage(),
+          home: const LoginPage(),
         );
       },
     );

@@ -5,15 +5,12 @@ import 'package:provider/provider.dart';
 import 'package:workshop/page/chat_detail_page.dart';
 import 'package:workshop/provider/user_provider.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Login"),
-      ),
       body: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
@@ -34,7 +31,9 @@ class HomePage extends StatelessWidget {
           }
 
           final user = snapshot.data;
-          context.read<UserProvider>().user = user!;
+          Future.microtask(() async {
+            context.read<UserProvider>().user = user!;
+          });
 
           return const ChatDetailPage();
         },
