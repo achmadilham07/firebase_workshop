@@ -1,4 +1,4 @@
-package com.example.mychat.ilham.workshop_day_1
+package com.belajarubic.workshop
 
 import io.flutter.embedding.android.FlutterActivity
 
