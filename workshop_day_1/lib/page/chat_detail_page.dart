@@ -41,10 +41,14 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("My Chat"),
+        actions: [
+          // TODO-3: Add button logout and call instance of FirebaseAuth to signout
+        ],
       ),
       body: Column(
         children: [
           Expanded(
+            // TODO-4: Change it into StreamBuilder
             child: ListView.builder(
               itemCount: messages.length,
               itemBuilder: (context, index) {
@@ -86,7 +90,9 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                 Padding(
                   padding: const EdgeInsets.only(left: 8),
                   child: FloatingActionButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      // TODO-5: Add Action to send a message
+                    },
                     elevation: 0,
                     mini: true,
                     highlightElevation: 0,
